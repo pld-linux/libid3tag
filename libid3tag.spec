@@ -2,11 +2,12 @@ Summary:	Library for reading and writing ID3 tags
 Summary(pl):	Biblioteka pozwalaj±ca na odczyt i zapis znaczników ID3
 Name:		libid3tag
 Version:	0.15.0b
-Release:	1.96
+Release:	2
 License:	GPL
 Group:		Libraries
 Source0:	ftp://ftp.mars.org/pub/mpeg/%{name}-%{version}.tar.gz
 # Source0-md5:	a625307d2cda4f3c609b79c1e3a93d87
+Patch0:		%{name}-id3v23.patch
 URL:		http://www.underbit.com/products/mad/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -51,9 +52,9 @@ Biblioteka statyczna libid3tag.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
-rm -f missing
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
@@ -64,7 +65,9 @@ rm -f missing
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
