@@ -1,20 +1,28 @@
-Summary:	Library for reading and (eventually) writing ID3 tags
+Summary:	Library for reading and writing ID3 tags
 Summary(pl):	Biblioteka pozwalaj±ca na odczyt i zapis tagów ID3
 Name:		libid3tag
 Version:	0.15.0b
-Release:	1
+Release:	1.9
 License:	GPL
 Group:		Libraries
 Source0:	ftp://ftp.mars.org/pub/mpeg/%{name}-%{version}.tar.gz
+# Source0-md5:	a625307d2cda4f3c609b79c1e3a93d87
 URL:		http://www.underbit.com/products/mad/
+BuildRequires:	libtool
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	zlib-devel
 Obsoletes:	mad-libs
 #Conflicts:	-
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
+libid3tag is a library for reading and (eventually) writing ID3 tags,
+both ID3v1 and the various versions of ID3v2
 
 %description -l pl
+libid3tag jest biblioteka do odczytu i zapisu tagów ID3 - zarówno w
+wersji ID3v1 jak te¿ ID3v2
 
 %package devel
 Summary:	Headers files for libid3tag
