@@ -1,15 +1,15 @@
 Summary:	Library for reading and writing ID3 tags
 Summary(pl):	Biblioteka pozwalaj±ca na odczyt i zapis znaczników ID3
 Name:		libid3tag
-Version:	0.15.0b
-Release:	2
+Version:	0.15.1b
+Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	ftp://ftp.mars.org/pub/mpeg/%{name}-%{version}.tar.gz
-# Source0-md5:	a625307d2cda4f3c609b79c1e3a93d87
+# Source0-md5:	e5808ad997ba32c498803822078748c3
 Patch0:		%{name}-id3v23.patch
 URL:		http://www.underbit.com/products/mad/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	zlib-devel
@@ -28,7 +28,8 @@ w wersji ID3v1 jak te¿ ID3v2.
 Summary:	Header files for libid3tag
 Summary(pl):	Pliki nag³ówkowe dla biblioteki libid3tag
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
+Requires:	zlib-devel
 Obsoletes:	mad-devel < 0.15.0b
 
 %description devel
@@ -41,7 +42,7 @@ Pliki nag³ówkowe dla biblioteki libid3tag.
 Summary:	Static libid3tag library
 Summary(pl):	Biblioteka statyczna libid3tag
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 Obsoletes:	mad-static < 0.15.0b
 
 %description static
