@@ -2,7 +2,7 @@ Summary:	Library for reading and writing ID3 tags
 Summary(pl):	Biblioteka pozwalaj±ca na odczyt i zapis tagów ID3
 Name:		libid3tag
 Version:	0.15.0b
-Release:	1.95
+Release:	1.96
 License:	GPL
 Group:		Libraries
 Source0:	ftp://ftp.mars.org/pub/mpeg/%{name}-%{version}.tar.gz
@@ -12,7 +12,7 @@ BuildRequires:	libtool
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	zlib-devel
-Conflicts:	mad-libs < 0.15.0b
+Obsoletes:	mad-libs < 0.15.0b
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -27,6 +27,8 @@ wersji ID3v1 jak te¿ ID3v2
 Summary:	Headers files for libid3tag
 Summary(pl):	Pliki nag³ówkowe dla biblioteki libid3tag
 Group:		Development/Libraries
+Requires:	%{name} = %{version}
+Obsoletes:	mad-devel < 0.15.0b
 
 %description devel
 Headers files for libid3tag
@@ -38,6 +40,8 @@ Pliki nag³ówkowe dla biblioteki libid3tag
 Summary:	Static libid3tag library
 Summary(pl):	Biblioteka statyczna libid3tag
 Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}
+Obsoletes:	mad-static < 0.15.0b
 
 %description static
 Static libid3tag library
@@ -60,9 +64,6 @@ rm -f missing
 
 %install
 rm -rf $RPM_BUILD_ROOT
-# create directories if necessary
-#install -d $RPM_BUILD_ROOT
-
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
 %clean
@@ -75,7 +76,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc CHANGES TODO CREDITS
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
-
 
 %files devel
 %defattr(644,root,root,755)
