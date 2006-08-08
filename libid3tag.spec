@@ -53,7 +53,7 @@ Biblioteka statyczna libid3tag.
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
 
 %build
 %{__libtoolize}
