@@ -2,7 +2,7 @@ Summary:	Library for reading and writing ID3 tags
 Summary(pl):	Biblioteka pozwalaj±ca na odczyt i zapis znaczników ID3
 Name:		libid3tag
 Version:	0.15.1b
-Release:	3
+Release:	4
 License:	GPL
 Group:		Libraries
 Source0:	ftp://ftp.mars.org/pub/mpeg/%{name}-%{version}.tar.gz
@@ -55,6 +55,21 @@ Biblioteka statyczna libid3tag.
 %setup -q
 %patch0 -p1
 
+# Create an additional pkgconfig file
+%{__cat} > id3tag.pc << EOF
+prefix=%{_prefix}
+exec_prefix=%{_prefix}
+libdir=%{_libdir}
+includedir=%{_includedir}
+
+Name: id3tag
+Description: ID3 tag library
+Requires:
+Version: %{version}
+Libs: -L%{_libdir} -lid3tag -lz
+Cflags: -I%{_includedir}
+EOF
+
 %build
 %{__libtoolize}
 %{__aclocal}
@@ -69,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+install -d $RPM_BUILD_ROOT%{_libdir}/pkgconfig/
+install id3tag.pc $RPM_BUILD_ROOT%{_libdir}/pkgconfig/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -86,6 +104,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
 %{_includedir}/*.h
+%{_pkgconfigdir}/id3tag.pc
 
 %files static
 %defattr(644,root,root,755)
