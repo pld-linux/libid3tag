@@ -1,5 +1,5 @@
 Summary:	Library for reading and writing ID3 tags
-Summary(pl):	Biblioteka pozwalaj±ca na odczyt i zapis znaczników ID3
+Summary(pl.UTF-8):   Biblioteka pozwalajÄ…ca na odczyt i zapis znacznikÃ³w ID3
 Name:		libid3tag
 Version:	0.15.1b
 Release:	5
@@ -20,13 +20,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 libid3tag is a library for reading and (eventually) writing ID3 tags,
 both ID3v1 and the various versions of ID3v2.
 
-%description -l pl
-libid3tag jest bibliotek± do odczytu i zapisu znaczników ID3 - zarówno
-w wersji ID3v1 jak te¿ ID3v2.
+%description -l pl.UTF-8
+libid3tag jest bibliotekÄ… do odczytu i zapisu znacznikÃ³w ID3 - zarÃ³wno
+w wersji ID3v1 jak teÅ¼ ID3v2.
 
 %package devel
 Summary:	Header files for libid3tag
-Summary(pl):	Pliki nag³ówkowe dla biblioteki libid3tag
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe dla biblioteki libid3tag
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	zlib-devel
@@ -35,12 +35,12 @@ Obsoletes:	mad-devel < 0.15.0b
 %description devel
 Header files for libid3tag.
 
-%description devel -l pl
-Pliki nag³ówkowe dla biblioteki libid3tag.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe dla biblioteki libid3tag.
 
 %package static
 Summary:	Static libid3tag library
-Summary(pl):	Biblioteka statyczna libid3tag
+Summary(pl.UTF-8):   Biblioteka statyczna libid3tag
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Obsoletes:	mad-static < 0.15.0b
@@ -48,7 +48,7 @@ Obsoletes:	mad-static < 0.15.0b
 %description static
 Static libid3tag library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Biblioteka statyczna libid3tag.
 
 %prep
