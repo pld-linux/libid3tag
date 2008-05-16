@@ -1,0 +1,12 @@
+diff -urN libid3tag-0.15.1b/field.c libid3tag-0.15.1b.new/field.c
+--- libid3tag-0.15.1b/field.c	2004-01-23 10:41:32.000000000 +0100
++++ libid3tag-0.15.1b.new/field.c	2008-05-16 18:44:38.000000000 +0200
+@@ -291,7 +291,7 @@
+ 
+       end = *ptr + length;
+ 
+-      while (end - *ptr > 0) {
++      while (end - *ptr > 0 && **ptr != '\0') {
+ 	ucs4 = id3_parse_string(ptr, end - *ptr, *encoding, 0);
+ 	if (ucs4 == 0)
+ 	  goto fail;
