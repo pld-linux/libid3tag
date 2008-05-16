@@ -2,12 +2,13 @@ Summary:	Library for reading and writing ID3 tags
 Summary(pl.UTF-8):	Biblioteka pozwalająca na odczyt i zapis znaczników ID3
 Name:		libid3tag
 Version:	0.15.1b
-Release:	5
+Release:	6
 License:	GPL
 Group:		Libraries
 Source0:	ftp://ftp.mars.org/pub/mpeg/%{name}-%{version}.tar.gz
 # Source0-md5:	e5808ad997ba32c498803822078748c3
 Patch0:		%{name}-id3v23.patch
+Patch1:		%{name}-dos.patch
 URL:		http://www.underbit.com/products/mad/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -54,6 +55,7 @@ Biblioteka statyczna libid3tag.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 # Create an additional pkgconfig file
 %{__cat} > id3tag.pc << EOF
@@ -81,11 +83,11 @@ EOF
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_pkgconfigdir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_pkgconfigdir}
 install id3tag.pc $RPM_BUILD_ROOT%{_pkgconfigdir}
 
 %clean
@@ -97,15 +99,16 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc CHANGES COPYRIGHT CREDITS README TODO
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
+%attr(755,root,root) %{_libdir}/libid3tag.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libid3tag.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/libid3tag.so
+%{_libdir}/libid3tag.la
 %{_includedir}/*.h
 %{_pkgconfigdir}/id3tag.pc
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libid3tag.a
