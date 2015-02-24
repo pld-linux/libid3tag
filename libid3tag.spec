@@ -2,7 +2,7 @@ Summary:	Library for reading and writing ID3 tags
 Summary(pl.UTF-8):	Biblioteka pozwalająca na odczyt i zapis znaczników ID3
 Name:		libid3tag
 Version:	0.15.1b
-Release:	6
+Release:	7
 License:	GPL
 Group:		Libraries
 Source0:	ftp://ftp.mars.org/pub/mpeg/%{name}-%{version}.tar.gz
