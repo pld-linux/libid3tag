@@ -54,8 +54,8 @@ Biblioteka statyczna libid3tag.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 
 # Create an additional pkgconfig file
 %{__cat} > id3tag.pc << EOF
