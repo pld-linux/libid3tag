@@ -1,10 +1,17 @@
+#
+# Conditional build:
+%bcond_without	static_libs	# static library
+
 Summary:	Library for reading and writing ID3 tags
 Summary(pl.UTF-8):	Biblioteka pozwalająca na odczyt i zapis znaczników ID3
 Name:		libid3tag
 Version:	0.16.4
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Libraries
+#Source0Download: https://codeberg.org/tenacityteam/libid3tag/releases
+# TODO use release tarballs?
+# https://codeberg.org/tenacityteam/libid3tag/releases/download/%{version}/id3tag-%{version}-source.tar.gz
 Source0:	https://codeberg.org/tenacityteam/libid3tag/archive/%{version}.tar.gz
 # Source0-md5:	6b4dcbc9e1746c9d76dcb0f1b9eb4c16
 URL:		https://codeberg.org/tenacityteam/libid3tag
@@ -54,22 +61,28 @@ Biblioteka statyczna libid3tag.
 %setup -q -n libid3tag
 
 %build
+# .pc file generation requires relative CMAKE_INSTALL_LIBDIR
 %cmake -B build \
-	-DBUILD_SHARED_LIBS=ON
+	-DBUILD_SHARED_LIBS=ON \
+	-DCMAKE_INSTALL_LIBDIR=%{_lib}
 
 %{__make} -C build
 
-# Also build static library
+%if %{with static_libs}
 %cmake -B build-static \
-	-DBUILD_SHARED_LIBS=OFF
+	-DBUILD_SHARED_LIBS=OFF \
+	-DCMAKE_INSTALL_LIBDIR=%{_lib}
 
 %{__make} -C build-static
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
+%if %{with static_libs}
 %{__make} -C build-static install \
 	DESTDIR=$RPM_BUILD_ROOT
+%endif
 
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -93,6 +106,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/id3tag.pc
 %{_libdir}/cmake/id3tag
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libid3tag.a
+%endif
