@@ -1,18 +1,16 @@
 Summary:	Library for reading and writing ID3 tags
 Summary(pl.UTF-8):	Biblioteka pozwalająca na odczyt i zapis znaczników ID3
 Name:		libid3tag
-Version:	0.15.1b
-Release:	7
-License:	GPL
+Version:	0.16.4
+Release:	1
+License:	GPL v2+
 Group:		Libraries
-Source0:	ftp://ftp.mars.org/pub/mpeg/%{name}-%{version}.tar.gz
-# Source0-md5:	e5808ad997ba32c498803822078748c3
-Patch0:		%{name}-id3v23.patch
-Patch1:		%{name}-dos.patch
-URL:		http://www.underbit.com/products/mad/
-BuildRequires:	autoconf >= 2.53
-BuildRequires:	automake
-BuildRequires:	libtool
+Source0:	https://codeberg.org/tenacityteam/libid3tag/archive/%{version}.tar.gz
+# Source0-md5:	6b4dcbc9e1746c9d76dcb0f1b9eb4c16
+URL:		https://codeberg.org/tenacityteam/libid3tag
+BuildRequires:	cmake >= 3.10
+BuildRequires:	gperf
+BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	zlib-devel
 Obsoletes:	mad-libs < 0.15.0b
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -53,42 +51,28 @@ Static libid3tag library.
 Biblioteka statyczna libid3tag.
 
 %prep
-%setup -q
-%patch -P0 -p1
-%patch -P1 -p1
-
-# Create an additional pkgconfig file
-%{__cat} > id3tag.pc << EOF
-prefix=%{_prefix}
-exec_prefix=%{_prefix}
-libdir=%{_libdir}
-includedir=%{_includedir}
-
-Name: id3tag
-Description: ID3 tag library
-Requires:
-Version: %{version}
-Libs: -L%{_libdir} -lid3tag -lz
-Cflags: -I%{_includedir}
-EOF
+%setup -q -n libid3tag
 
 %build
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure
-%{__make}
+%cmake -B build \
+	-DBUILD_SHARED_LIBS=ON
+
+%{__make} -C build
+
+# Also build static library
+%cmake -B build-static \
+	-DBUILD_SHARED_LIBS=OFF
+
+%{__make} -C build-static
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_pkgconfigdir}
 
-%{__make} install \
+%{__make} -C build-static install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install id3tag.pc $RPM_BUILD_ROOT%{_pkgconfigdir}
+%{__make} -C build install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -98,16 +82,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGES COPYRIGHT CREDITS README TODO
+%doc CHANGES COPYRIGHT CREDITS README.md
 %attr(755,root,root) %{_libdir}/libid3tag.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libid3tag.so.0
+%ghost %{_libdir}/libid3tag.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libid3tag.so
-%{_libdir}/libid3tag.la
-%{_includedir}/*.h
+%{_libdir}/libid3tag.so
+%{_includedir}/id3tag.h
 %{_pkgconfigdir}/id3tag.pc
+%{_libdir}/cmake/id3tag
 
 %files static
 %defattr(644,root,root,755)
